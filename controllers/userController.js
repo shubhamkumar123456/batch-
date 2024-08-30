@@ -60,6 +60,25 @@ const loginUser = async(req,res)=>{
 
 }
 
+const updateUser = async(req,res)=>{
+    let id = req.params._id;
+    let {name,password} = req.body;
+    try {
+       let hashedPassword;
+
+    if(password){
+       hashedPassword = bcrypt.hashSync(password, salt);
+    }
+    
+    let data = await UserCollection.findByIdAndUpdate(id, {$set:{name:name,password:hashedPassword}},{new:true})
+
+    res.json({msg:"user updated successfull",success:true,data})
+   } catch (error) {
+    res.json({msg:"error in updating user",success:false,error:error.message})
+   }
+}
+
+
 const getAllusers = async(req, res)=>{
     let data = await UserCollection.find();
 
@@ -86,5 +105,6 @@ module.exports = {
     registerUser,
     getAllusers,
     deleteUser,
-    loginUser
+    loginUser,
+    updateUser
 }

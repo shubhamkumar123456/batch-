@@ -6,6 +6,7 @@ connectToDB();
 
 // all routes files
 let userRoutes = require('./routes/userRoutes')
+let postRoutes = require('./routes/postRoutes')
 
 app.use(express.json()) 
 app.get('/', (req, res) => {
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/users',userRoutes)
+app.use('/post',postRoutes)
 
 
 
